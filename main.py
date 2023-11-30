@@ -1,143 +1,92 @@
-#стек - загальне поняття через список
-stack = []
-stack.append("a")
-stack.append("b")
-stack.append("c")
-stack.append("d")
-print(stack[-1])#peek()
-print(stack.pop())
-print(stack)
-print(stack.pop())
-print(stack.pop())
-print(stack.pop())
-print(stack)
+# Завдання 1
+# Реалізуйте клас стека роботи з цілими значеннями (стек цілих). Стек має бути фіксованого розміру.
+# Реалізуйте набір операцій для роботи зі стеком o розміщення цілого значення у стеку;
+# o виштовхування цілого значення зі стеку;
+# o підрахунок кількості цілих у стеку;
+# o перевірку, чи порожній стек;
+# o перевірку, чи повний стек;
+# o очищення стеку;
+# o отримання значення без виштовхування верхнього цілого в стеку.
+# На старті додатка відобразіть меню, в якому користувач може вибрати необхідну операцію.
 
-from collections import deque
 
-#порожній стек
-stack = deque()
+class FixedStack:
+    def __init__(self, size):
+        self.size = size
+        self.stack = [None] * size
+        self.top = -1
 
-stack.append("a")
-stack.append("b")
-stack.append("c")
-print(stack)
-print(stack.pop())
-print(stack)
-print(stack.pop())
+    def is_empty(self):
+        return self.top == -1
 
-from queue import LifoQueue
-
-stack = LifoQueue(maxsize=3)
-print(stack.qsize())#кількість елементів
-stack.put("a")
-stack.put("b")
-stack.put("c")
-
-print(stack.full())
-print(stack.qsize())#кількість елементів
-for i in range(stack.qsize()):
-    print(stack.get())
-
-#за допомогою однозв'язного списку
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.next = None
-class Stack:
-    def __init__(self):
-        self.head = Node("head")
-        self.size = 0
-    def __str__(self):
-        cur = self.head.next
-        out = ""
-        while cur:
-            out += str(cur.value) + " -> "
-            cur = cur.next
-        return out[:-4]
-
-    def getSize(self):
-        return self.size
-
-    def isEmpty(self):
-        return self.size == 0
-
-    def peek(self):
-        if self.isEmpty():
-            raise Exception("стек порожній, неможливо продивитися")
-        return self.head.next.value
+    def is_full(self):
+        return self.top == self.size - 1
 
     def push(self, value):
-        node = Node(value)
-        node.next = self.head.next
-        self.head.next = node
-        self.size += 1
-
-    def pop(self):
-        if self.isEmpty():
-            raise Exception("стек порожній, неможливо видалити")
-        remove = self.head.next
-        self.head.next = self.head.next.next
-        self.size -= 1
-        return remove.value
-
-stack = Stack()
-for i in range(1, 11):
-    stack.push(i)
-print(stack)
-print(stack.pop())
-print(stack.peek())
-print(stack)
-
-# Стек за допомогою класів
-
-class Stack:
-    def __init__(self):
-        self.items = []
-
-    def is_emty(self):
-        return not self.items
-    def push(self, item):
-        self.items.append(item)
-
-    def pop(self):
-        if not self.is_emty():
-            return self.items.pop()
+        if self.is_full():
+            print("Стек повний, неможливо додати значення.")
         else:
-            return "Стек пустий!"
+            self.top += 1
+            self.stack[self.top] = value
+
+    def pop(self):
+        if self.is_empty():
+            print("Стек порожній, неможливо видалити значення.")
+        else:
+            value = self.stack[self.top]
+            self.top -= 1
+            return value
+
+    def get_size(self):
+        return self.top + 1
+
+    def clear(self):
+        self.top = -1
+        self.stack = [None] * self.size
 
     def peek(self):
-        if not self.is_emty():
-            return self.items[-1]
+        if self.is_empty():
+            print("Стек порожній, неможливо переглянути значення.")
         else:
-            return "Стек пустий!"
-    def size(self):
-        return len(self.items)
-stack = Stack()
-stack.push(1)
-stack.push(2)
-stack.push(3)
-stack.push(4)
-print(stack.size())
-print(stack.pop())
-print(stack.peek())
+            return self.stack[self.top]
 
-#практика
 
-def chack_brackets(text):
-    stack = []
-    for char in text:
-        if char in "{[(":
-            stack.append(char)
-        elif char in "}])":
-            if not stack or not is_matching(stack.pop(), char):
-                return False
-    return len(stack) == 0
-def is_matching(opening, closing):
-    return opening == '(' and closing == ')' or \
-           opening == '{' and closing == '}' or \
-           opening == '[' and closing == ']'
+# Приклад використання класу FixedStack:
+fixed_stack = FixedStack(5)
 
-test = ["()", "[[{}]]", "{[}]", "((())"]
-for t in test:
-    result = chack_brackets(t)
-    print(result)
+while True:
+    print("\nМеню:")
+    print("1. Додати значення у стек")
+    print("2. Видалити значення зі стеку")
+    print("3. Кількість значень у стеку")
+    print("4. Перевірити, чи стек порожній")
+    print("5. Перевірити, чи стек повний")
+    print("6. Очистити стек")
+    print("7. Отримати значення без видалення з верхнього елемента стеку")
+    print("0. Вихід")
+
+    choice = input("Виберіть опцію: ")
+
+    if choice == "1":
+        value = int(input("Введіть значення: "))
+        fixed_stack.push(value)
+    elif choice == "2":
+        popped_value = fixed_stack.pop()
+        print("Видалено значення:", popped_value)
+    elif choice == "3":
+        print("Кількість значень у стеку:", fixed_stack.get_size())
+    elif choice == "4":
+        print("Стек порожній:", fixed_stack.is_empty())
+    elif choice == "5":
+        print("Стек повний:", fixed_stack.is_full())
+    elif choice == "6":
+        fixed_stack.clear()
+        print("Стек очищено.")
+    elif choice == "7":
+        peeked_value = fixed_stack.peek()
+        print("Значення на вершині стеку:", peeked_value)
+    elif choice == "0":
+        print("Дякую за використання. До побачення!")
+        break
+    else:
+        print("Невірний вибір. Будь ласка, виберіть правильну опцію.")
