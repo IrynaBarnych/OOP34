@@ -120,3 +120,24 @@ stack.push(4)
 print(stack.size())
 print(stack.pop())
 print(stack.peek())
+
+#практика
+
+def chack_brackets(text):
+    stack = []
+    for char in text:
+        if char in "{[(":
+            stack.append(char)
+        elif char in "}])":
+            if not stack or not is_matching(stack.pop(), char):
+                return False
+    return len(stack) == 0
+def is_matching(opening, closing):
+    return opening == '(' and closing == ')' or \
+           opening == '{' and closing == '}' or \
+           opening == '[' and closing == ']'
+
+test = ["()", "[[{}]]", "{[}]", "((())"]
+for t in test:
+    result = chack_brackets(t)
+    print(result)
