@@ -10,83 +10,81 @@
 # На старті додатка відобразіть меню, в якому користувач може вибрати необхідну операцію.
 
 
-class FixedStack:
-    def __init__(self, size):
-        self.size = size
-        self.stack = [None] * size
-        self.top = -1
+class Stack:
+    def __init__(self, max_size):
+        self.items = []
+        self.max_size = max_size
 
     def is_empty(self):
-        return self.top == -1
+        return not self.items
 
     def is_full(self):
-        return self.top == self.size - 1
+        return len(self.items) == self.max_size
 
-    def push(self, value):
-        if self.is_full():
-            print("Стек повний, неможливо додати значення.")
+    def push(self, item):
+        if not self.is_full():
+            self.items.append(item)
         else:
-            self.top += 1
-            self.stack[self.top] = value
+            print("Stack is full")
 
     def pop(self):
-        if self.is_empty():
-            print("Стек порожній, неможливо видалити значення.")
+        if not self.is_empty():
+            return self.items.pop()
         else:
-            value = self.stack[self.top]
-            self.top -= 1
-            return value
-
-    def get_size(self):
-        return self.top + 1
-
-    def clear(self):
-        self.top = -1
-        self.stack = [None] * self.size
+            return "Stack is empty"
 
     def peek(self):
-        if self.is_empty():
-            print("Стек порожній, неможливо переглянути значення.")
+        if not self.is_empty():
+            return self.items[-1]
         else:
-            return self.stack[self.top]
+            return "Stack is empty"
 
+    def size(self):
+        return len(self.items)
 
-# Приклад використання класу FixedStack:
-fixed_stack = FixedStack(5)
+    def clear(self):
+        self.items = []
+
+    def get_top_without_pop(self):
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            return "Stack is empty"
+
+stack = Stack(5)
 
 while True:
     print("\nМеню:")
-    print("1. Додати значення у стек")
-    print("2. Видалити значення зі стеку")
-    print("3. Кількість значень у стеку")
-    print("4. Перевірити, чи стек порожній")
-    print("5. Перевірити, чи стек повний")
-    print("6. Очистити стек")
-    print("7. Отримати значення без видалення з верхнього елемента стеку")
-    print("0. Вихід")
+    print("1. Додати елемент у стек")
+    print("2. Виштовхнути елемент зі стеку")
+    print("3. Підрахунок кількості елементів у стеці")
+    print("4. Перевірка, чи порожній стек")
+    print("5. Перевірка, чи повний стек")
+    print("6. Очищення стеку")
+    print("7. Отримання значення верхнього елементу без виштовхування")
+    print("8. Вихід")
 
-    choice = input("Виберіть опцію: ")
+    choice = input("Введіть номер операції: ")
 
     if choice == "1":
-        value = int(input("Введіть значення: "))
-        fixed_stack.push(value)
+        item = int(input("Введіть ціле значення для додавання у стек: "))
+        stack.push(item)
     elif choice == "2":
-        popped_value = fixed_stack.pop()
-        print("Видалено значення:", popped_value)
+        print("Виштовхнутий елемент:", stack.pop())
     elif choice == "3":
-        print("Кількість значень у стеку:", fixed_stack.get_size())
+        print("Кількість елементів у стеці:", stack.size())
     elif choice == "4":
-        print("Стек порожній:", fixed_stack.is_empty())
+        print("Чи порожній стек:", stack.is_empty())
     elif choice == "5":
-        print("Стек повний:", fixed_stack.is_full())
+        print("Чи повний стек:", stack.is_full())
     elif choice == "6":
-        fixed_stack.clear()
+        stack.clear()
         print("Стек очищено.")
     elif choice == "7":
-        peeked_value = fixed_stack.peek()
-        print("Значення на вершині стеку:", peeked_value)
-    elif choice == "0":
-        print("Дякую за використання. До побачення!")
+        print("Значення верхнього елементу без виштовхування:", stack.get_top_without_pop())
+    elif choice == "8":
+        print("Дякую за використання програми. Вихід.")
         break
     else:
-        print("Невірний вибір. Будь ласка, виберіть правильну опцію.")
+        print("Невірний вибір. Спробуйте ще раз.")
+
