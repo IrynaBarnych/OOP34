@@ -1,81 +1,58 @@
-# Завдання 1
-# Реалізуйте клас стека роботи з цілими значеннями (стек цілих). Стек має бути не фіксованого розміру.
-# Реалізуйте набір операцій для роботи зі стеком o розміщення цілого значення у стеку;
-# o виштовхування цілого значення зі стеку;
-# o підрахунок кількості цілих у стеку;
-# o перевірку, чи порожній стек;
-# o перевірку, чи повний стек;
-# o очищення стеку;
-# o отримання значення без виштовхування верхнього цілого в стеку.
-# На старті додатка відобразіть меню, в якому користувач може вибрати необхідну операцію.
+# Завдання 3
+# Історія дій: Створіть клас Calculator, який
+# використовує стек для зберігання операцій та
+# операндів. Методи класу можуть виконувати операції,
+# зберігаючи їх у стеці для подальшого відновлення
+# історії обчислень.
 
-
-class Stack:
+class Calculator:
     def __init__(self):
-        self.items = []
+        self.stack = []
 
-    def is_empty(self):
-        return not self.items
-
-    def push(self, item):
-        self.items.append(item)
-
-    def pop(self):
-        if not self.is_empty():
-            return self.items.pop()
+    def perform_operation(self, operator, operand):
+        if operator in ('+', '-', '*', '/'):
+            self.stack.append((operator, operand))
+            self.calculate_result()
+            self.print_history()
         else:
-            return "Stack is empty"
+            print("Invalid operator")
 
-    def peek(self):
-        if not self.is_empty():
-            return self.items[-1]
-        else:
-            return "Stack is empty"
+    def calculate_result(self):
+        while len(self.stack) >= 3 and self.stack[-3][0] == 'result':
+            operator, operand = self.stack[-2:]
+            del self.stack[-3:]
 
-    def size(self):
-        return len(self.items)
+            if operator == '+':
+                result = operand[0] + operand[1]
+            elif operator == '-':
+                result = operand[0] - operand[1]
+            elif operator == '*':
+                result = operand[0] * operand[1]
+            elif operator == '/':
+                result = operand[0] / operand[1]
 
-    def clear(self):
-        self.items = []
+            self.stack.append(('result', result))
 
-    def get_top_without_pop(self):
-        if not self.is_empty():
-            return self.items[-1]
-        else:
-            return "Stack is empty"
+    def print_history(self):
+        print("History:")
+        for entry in self.stack:
+            print(entry)
+        print()
 
-stack = Stack()
+    def get_history(self):
+        return self.stack
 
-while True:
-    print("\nМеню:")
-    print("1. Додати елемент у стек")
-    print("2. Виштовхнути елемент зі стеку")
-    print("3. Підрахунок кількості елементів у стеці")
-    print("4. Перевірка, чи порожній стек")
-    print("5. Очищення стеку")
-    print("6. Отримання значення верхнього елементу без виштовхування")
-    print("7. Вихід")
 
-    choice = input("Введіть номер операції: ")
+# Приклад використання:
+calculator = Calculator()
 
-    if choice == "1":
-        item = int(input("Введіть ціле значення для додавання у стек: "))
-        stack.push(item)
-    elif choice == "2":
-        print("Виштовхнутий елемент:", stack.pop())
-    elif choice == "3":
-        print("Кількість елементів у стеці:", stack.size())
-    elif choice == "4":
-        print("Чи порожній стек:", stack.is_empty())
-    elif choice == "5":
-        stack.clear()
-        print("Стек очищено.")
-    elif choice == "6":
-        print("Значення верхнього елементу без виштовхування:", stack.get_top_without_pop())
-    elif choice == "7":
-        print("Дякую за використання програми. Вихід.")
-        break
-    else:
-        print("Невірний вибір. Спробуйте ще раз.")
+calculator.perform_operation('+', 10)
+calculator.perform_operation('*', 2)
+calculator.perform_operation('-', 5)
+calculator.perform_operation('/', 3)
+
+
+
+
 
 
