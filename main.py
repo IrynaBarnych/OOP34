@@ -19,19 +19,19 @@
 
 
 class Stack:
-    def __init__(self, max_size):
+    def __init__(self):
         self.items = []
-        self.max_size = max_size
 
     def is_empty(self):
         return not self.items
+
     def is_full(self):
-        return len(self.items) == self.max_size
+        # Оскільки стек тепер не фіксованого розміру, він завжди буде "не повним"
+        # оскільки немає максимального розміру, який можна перевищити.
+        return False
 
     def push(self, item):
-        if not self.is_full():
-            self.items.append(item)
-            print("Стек повний. Неможливо додати елемент.")
+        self.items.append(item)
 
     def pop(self):
         if not self.is_empty():
@@ -53,12 +53,12 @@ class Stack:
 
     def get_top_without_pop(self):
         if not self.is_empty():
-            return self.items[-1]  #
+            return self.items[-1]
         else:
             return "Стек порожній. Відсутній верхній елемент."
 
 
-stack = Stack(5)
+stack = Stack()
 
 while True:
     print("\nМеню:")
@@ -94,4 +94,5 @@ while True:
         break
     else:
         print("Невірний вибір. Спробуйте ще раз.")
+
 
