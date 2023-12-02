@@ -9,47 +9,71 @@ class Calculator:
     def __init__(self):
         self.stack = []
 
-    def perform_operation(self, operator, operand):
-        if operator in ('+', '-', '*', '/'):
-            self.stack.append((operator, operand))
-            self.calculate_result()
-            self.print_history()
+    def add(self, operand):
+        result = sum(operand)
+        self.stack.append(('add', operand, result))
+        return result
+
+    def sub(self, operand):
+        result = operand[0] - operand[1]
+        self.stack.append(('sub', operand, result))
+        return result
+
+    def mul(self, operand):
+        result = operand[0] * operand[1]
+        self.stack.append(('mul', operand, result))
+        return result
+
+    def truediv(self, operand):
+        if operand[1] != 0:
+            result = operand[0] / operand[1]
+            self.stack.append(('truediv', operand, result))
+            return result
         else:
-            print("Invalid operator")
+            raise ValueError("Division by zero")
 
-    def calculate_result(self):
-        while len(self.stack) >= 3 and self.stack[-3][0] == 'result':
-            operator, operand = self.stack[-2:]
-            del self.stack[-3:]
-
-            if operator == '+':
-                result = operand[0] + operand[1]
-            elif operator == '-':
-                result = operand[0] - operand[1]
-            elif operator == '*':
-                result = operand[0] * operand[1]
-            elif operator == '/':
-                result = operand[0] / operand[1]
-
-            self.stack.append(('result', result))
-
-    def print_history(self):
-        print("History:")
-        for entry in self.stack:
-            print(entry)
-        print()
-
-    def get_history(self):
+    @property
+    def history(self):
         return self.stack
 
 
-# Приклад використання:
-calculator = Calculator()
+class MyClass:
+    calculator = Calculator()
 
-calculator.perform_operation('+', 10)
-calculator.perform_operation('*', 2)
-calculator.perform_operation('-', 5)
-calculator.perform_operation('/', 3)
+    def __init__(self, value):
+        self.value = value
+
+    def add(self, other):
+        return self.calculator.add((self.value, other.value))
+
+    def sub(self, other):
+        return self.calculator.sub((self.value, other.value))
+
+    def mul(self, other):
+        return self.calculator.mul((self.value, other.value))
+
+    def truediv(self, other):
+        return self.calculator.truediv((self.value, other.value))
+
+    @property
+    def history(self):
+        return self.calculator.history
+
+
+# Example usage:
+obj1 = MyClass(10)
+obj2 = MyClass(2)
+print(obj1.add(obj2))
+print(obj1.sub(obj2))
+print(obj1.mul(obj2))
+print(obj1.truediv(obj2))
+
+print(obj1.history)
+print(obj2.history)
+
+
+
+
 
 
 
