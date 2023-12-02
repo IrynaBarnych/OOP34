@@ -59,7 +59,6 @@ class MyClass:
     def history(self):
         return self.calculator.history
 
-
 obj1 = MyClass(10)
 obj2 = MyClass(2)
 print(obj1.add(obj2))
