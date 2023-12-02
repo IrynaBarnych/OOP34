@@ -11,6 +11,29 @@
 # зберігання проміжних ходів при переміщенні дисків між
 # вежами.
 
+def hanoi_r(n, source, target, auxiliary, stack):
+    if n > 0:
+        stack.append((n, source, target, auxiliary))
+
+        while stack:
+            n, a, b, c = stack.pop()
+            if n == 1:
+                print(f"Перемістити диск 1 зі стовпа {a} на стовп {b}")
+            else:
+
+                stack.append((n - 1, c, b, a))  # Переміщення (n-1) дисків з "c" на "b" через "a"
+                stack.append((1, a, b, c))      # Переміщення 1 диска з "a" на "b"
+                stack.append((n - 1, a, c, b))  # Переміщення (n-1) дисків з "a" на "c" через "b"
+
+def hanoi(n):
+    source, target, auxiliary = "A", "C", "B"
+    stack = []
+    hanoi_r(n, source, target, auxiliary, stack)
+
+n = int(input("Введіть кількість дисків: "))
+
+
+hanoi(n)
 
 
 
