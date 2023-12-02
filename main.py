@@ -26,8 +26,6 @@ class Stack:
         return not self.items
 
     def is_full(self):
-        # Оскільки стек тепер не фіксованого розміру, він завжди буде "не повним"
-        # оскільки немає максимального розміру, який можна перевищити.
         return False
 
     def push(self, item):
@@ -37,13 +35,13 @@ class Stack:
         if not self.is_empty():
             return self.items.pop()
         else:
-            return "Стек порожній. Неможливо виштовхнути елемент."
+            return "Стек порожній."
 
     def peek(self):
         if not self.is_empty():
             return self.items[-1]
         else:
-            return "Стек порожній. Відсутній верхній елемент."
+            return "Стек порожній."
 
     def size(self):
         return len(self.items)
@@ -55,7 +53,7 @@ class Stack:
         if not self.is_empty():
             return self.items[-1]
         else:
-            return "Стек порожній. Відсутній верхній елемент."
+            return "Стек порожній."
 
 
 stack = Stack()
