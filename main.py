@@ -13,47 +13,47 @@
 # На старті додатка відобразіть меню, в якому користувач
 # може вибрати необхідну операцію.
 
+#Завдання 2
+#Змініть стек із першого завдання таким чином, щоб його
+#розмір був нефіксованим.
+
 class Stack:
-    def __init__(self, max_size):
-        self.items = []
-        self.max_size = max_size
+    def __init__(self):
+        self.items = []  # Створення порожнього списку для зберігання елементів стеку
 
     def is_empty(self):
-        return not self.items
-    def is_full(self):
-        return len(self.items) == self.max_size
+        return not self.items  # Перевірка на пустоту: True, якщо стек порожній
 
     def push(self, item):
-        if not self.is_full():
-            self.items.append(item)
-            print("Стек повний. Неможливо додати елемент.")
+        self.items.append(item)  # Додавання елементу до вершини стеку
 
     def pop(self):
         if not self.is_empty():
-            return self.items.pop()
+            return self.items.pop()  # Вилучення та повернення верхнього елементу
         else:
             return "Стек порожній. Неможливо виштовхнути елемент."
 
     def peek(self):
         if not self.is_empty():
-            return self.items[-1]
+            return self.items[-1]  # Повернення верхнього елементу стеку без вилучення
         else:
             return "Стек порожній. Відсутній верхній елемент."
 
     def size(self):
-        return len(self.items)
+        return len(self.items)  # Повернення кількості елементів у стеці
 
     def clear(self):
-        self.items = []
+        self.items = []  # Очищення стеку
 
     def get_top_without_pop(self):
         if not self.is_empty():
-            return self.items[-1]  #
+            return self.items[-1]  # Отримання значення верхнього елементу без виштовхування
         else:
             return "Стек порожній. Відсутній верхній елемент."
 
 
-stack = Stack(5)
+# Створення екземпляра класу Stack
+stack = Stack()
 
 while True:
     print("\nМеню:")
@@ -61,10 +61,9 @@ while True:
     print("2. Виштовхнути елемент зі стеку")
     print("3. Підрахунок кількості елементів у стеці")
     print("4. Перевірка, чи порожній стек")
-    print("5. Перевірка, чи повний стек")
-    print("6. Очищення стеку")
-    print("7. Отримання значення верхнього елементу без виштовхування")
-    print("8. Вихід")
+    print("5. Очищення стеку")
+    print("6. Отримання значення верхнього елементу без виштовхування")
+    print("7. Вихід")
 
     choice = input("Введіть номер операції: ")
 
@@ -78,13 +77,11 @@ while True:
     elif choice == "4":
         print("Чи порожній стек:", stack.is_empty())
     elif choice == "5":
-        print("Чи повний стек:", stack.is_full())
-    elif choice == "6":
         stack.clear()
         print("Стек очищено.")
-    elif choice == "7":
+    elif choice == "6":
         print("Значення верхнього елементу без виштовхування:", stack.get_top_without_pop())
-    elif choice == "8":
+    elif choice == "7":
         print("Дякую за використання програми. Вихід.")
         break
     else:
