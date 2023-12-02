@@ -27,19 +27,19 @@ class Stack:
     def push(self, item):
         if not self.is_full():
             self.items.append(item)
-            print("Стек повний. Неможливо додати елемент.")
+            print("Стек повний.")
 
     def pop(self):
         if not self.is_empty():
             return self.items.pop()
         else:
-            return "Стек порожній. Неможливо виштовхнути елемент."
+            return "Стек порожній."
 
     def peek(self):
         if not self.is_empty():
             return self.items[-1]
         else:
-            return "Стек порожній. Відсутній верхній елемент."
+            return "Стек порожній."
 
     def size(self):
         return len(self.items)
@@ -49,9 +49,9 @@ class Stack:
 
     def get_top_without_pop(self):
         if not self.is_empty():
-            return self.items[-1]  #
+            return self.items[-1]
         else:
-            return "Стек порожній. Відсутній верхній елемент."
+            return "Стек порожній."
 
 
 stack = Stack(5)
