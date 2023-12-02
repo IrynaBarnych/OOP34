@@ -13,77 +13,80 @@
 # На старті додатка відобразіть меню, в якому користувач
 # може вибрати необхідну операцію.
 
-class Calculator:
-    def __init__(self):
-        self.stack = []
+class Stack:
+    def __init__(self, max_size):
+        self.items = []
+        self.max_size = max_size
 
-    def add(self, operand):
-        result = sum(operand)
-        self.stack.append(('add', operand, result))
-        return result
+    def is_empty(self):
+        return not self.items
+    def is_full(self):
+        return len(self.items) == self.max_size
 
-    def sub(self, operand):
-        result = operand[0] - operand[1]
-        self.stack.append(('sub', operand, result))
-        return result
+    def push(self, item):
+        if not self.is_full():
+            self.items.append(item)
+            print("Стек повний. Неможливо додати елемент.")
 
-    def mul(self, operand):
-        result = operand[0] * operand[1]
-        self.stack.append(('mul', operand, result))
-        return result
-
-    def truediv(self, operand):
-        if operand[1] != 0:
-            result = operand[0] / operand[1]
-            self.stack.append(('truediv', operand, result))
-            return result
+    def pop(self):
+        if not self.is_empty():
+            return self.items.pop()
         else:
-            raise ValueError("Division by zero")
+            return "Стек порожній. Неможливо виштовхнути елемент."
 
-    @property
-    def history(self):
-        return self.stack
+    def peek(self):
+        if not self.is_empty():
+            return self.items[-1]
+        else:
+            return "Стек порожній. Відсутній верхній елемент."
 
+    def size(self):
+        return len(self.items)
 
-class MyClass:
-    calculator = Calculator()
+    def clear(self):
+        self.items = []
 
-    def __init__(self, value):
-        self.value = value
-
-    def add(self, other):
-        return self.calculator.add((self.value, other.value))
-
-    def sub(self, other):
-        return self.calculator.sub((self.value, other.value))
-
-    def mul(self, other):
-        return self.calculator.mul((self.value, other.value))
-
-    def truediv(self, other):
-        return self.calculator.truediv((self.value, other.value))
-
-    @property
-    def history(self):
-        return self.calculator.history
+    def get_top_without_pop(self):
+        if not self.is_empty():
+            return self.items[-1]  #
+        else:
+            return "Стек порожній. Відсутній верхній елемент."
 
 
-obj1 = MyClass(10)
-obj2 = MyClass(2)
-print(obj1.add(obj2))
-print(obj1.sub(obj2))
-print(obj1.mul(obj2))
-print(obj1.truediv(obj2))
+stack = Stack(5)
 
-print(obj1.history)
-print(obj2.history)
+while True:
+    print("\nМеню:")
+    print("1. Додати елемент у стек")
+    print("2. Виштовхнути елемент зі стеку")
+    print("3. Підрахунок кількості елементів у стеці")
+    print("4. Перевірка, чи порожній стек")
+    print("5. Перевірка, чи повний стек")
+    print("6. Очищення стеку")
+    print("7. Отримання значення верхнього елементу без виштовхування")
+    print("8. Вихід")
 
+    choice = input("Введіть номер операції: ")
 
-
-
-
-
-
-
-
+    if choice == "1":
+        item = input("Введіть значення для додавання у стек: ")
+        stack.push(item)
+    elif choice == "2":
+        print("Виштовхнутий елемент:", stack.pop())
+    elif choice == "3":
+        print("Кількість елементів у стеці:", stack.size())
+    elif choice == "4":
+        print("Чи порожній стек:", stack.is_empty())
+    elif choice == "5":
+        print("Чи повний стек:", stack.is_full())
+    elif choice == "6":
+        stack.clear()
+        print("Стек очищено.")
+    elif choice == "7":
+        print("Значення верхнього елементу без виштовхування:", stack.get_top_without_pop())
+    elif choice == "8":
+        print("Дякую за використання програми. Вихід.")
+        break
+    else:
+        print("Невірний вибір. Спробуйте ще раз.")
 
